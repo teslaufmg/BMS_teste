@@ -207,6 +207,7 @@ int main(void)
 	{
 		BMS_monitoring(&BMS);
 
+//		LTC6804_read_registers(BMS->sensor_v[0]->v_cell, )
 		BMS_error(&BMS);
 
 		BMS_communication(&BMS);

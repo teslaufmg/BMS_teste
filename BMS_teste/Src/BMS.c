@@ -109,7 +109,7 @@ void BMS_monitoring(BMS_struct *BMS){
 
 	LTC6804_convert_all();
 
-	for(i = 0; i < N_OF_PACKS; i++){
+	for(i = 0; i < 6; i++){
 
 		//UART_print("\n%d", BMS->sensor_v[i]->status);
 		if(LTC6804_check_status(BMS->sensor_v[i])){
@@ -118,9 +118,13 @@ void BMS_monitoring(BMS_struct *BMS){
 
 		if (BMS->sensor_v[i]->status == STAT_OPPERATING) {
 			//VOLTAGES
+
+
 			BMS->error_flag |= LTC6804_read_registers(BMS->sensor_v[i]->v_cell, BMS->sensor_v[i]->address, READ_VOLTAGES);
+
+
 			//TEMPERATURES
-			BMS->error_flag |= LTC6804_read_registers(BMS->sensor_v[i]->t_cell, BMS->sensor_v[i]->address, READ_TEMPERATURES);
+//			BMS->error_flag |= LTC6804_read_registers(BMS->sensor_v[i]->t_cell, BMS->sensor_v[i]->address, READ_TEMPERATURES);
 			//FUSES
 
 		}
