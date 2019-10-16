@@ -1,0 +1,141 @@
+19:09:39 **** Incremental Build of configuration Debug for project BMS_teste ****
+make all 
+Building file: ../Src/BMS.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/BMS.d" -MT"Src/BMS.o" -o "Src/BMS.o" "../Src/BMS.c"
+../Src/BMS.c: In function 'BMS_init':
+../Src/BMS.c:87:2: warning: implicit declaration of function 'CAN_ConfigFilter' [-Wimplicit-function-declaration]
+  CAN_ConfigFilter();
+  ^~~~~~~~~~~~~~~~
+../Src/BMS.c:88:2: warning: implicit declaration of function 'CAN_ConfigFrames' [-Wimplicit-function-declaration]
+  CAN_ConfigFrames();
+  ^~~~~~~~~~~~~~~~
+../Src/BMS.c:89:2: warning: implicit declaration of function 'CAN_Receive' [-Wimplicit-function-declaration]
+  CAN_Receive();
+  ^~~~~~~~~~~
+../Src/BMS.c: In function 'BMS_can':
+../Src/BMS.c:375:3: warning: this 'if' clause does not guard... [-Wmisleading-indentation]
+   if(BMS->sensor_v[i]->v_min_cell < v_min)
+   ^~
+../Src/BMS.c:377:4: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'if'
+    aux = i;
+    ^~~
+../Src/BMS.c:418:5: warning: implicit declaration of function 'CAN_Transmit' [-Wimplicit-function-declaration]
+     CAN_Transmit(can_vector, CAN_ID_TABLE[i][j]);
+     ^~~~~~~~~~~~
+../Src/BMS.c:420:5: warning: implicit declaration of function 'sendString' [-Wimplicit-function-declaration]
+     sendString(CAN_ID_TABLE[i][j], BMS->sensor_v[i]->v_cell[(j * 4)],
+     ^~~~~~~~~~
+../Src/BMS.c: In function 'BMS_uart':
+../Src/BMS.c:556:2: warning: implicit declaration of function 'UART_print' [-Wimplicit-function-declaration]
+  UART_print("\n\n\n\n"  );//HEADER
+  ^~~~~~~~~~
+../Src/BMS.c:558:2: warning: implicit declaration of function 'UART_print_error_flag' [-Wimplicit-function-declaration]
+  UART_print_error_flag(BMS->error_flag);
+  ^~~~~~~~~~~~~~~~~~~~~
+Finished building: ../Src/BMS.c
+ 
+Building file: ../Src/DHAB_s125.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/DHAB_s125.d" -MT"Src/DHAB_s125.o" -o "Src/DHAB_s125.o" "../Src/DHAB_s125.c"
+Finished building: ../Src/DHAB_s125.c
+ 
+Building file: ../Src/LED.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/LED.d" -MT"Src/LED.o" -o "Src/LED.o" "../Src/LED.c"
+Finished building: ../Src/LED.c
+ 
+Building file: ../Src/LTC6804.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/LTC6804.d" -MT"Src/LTC6804.o" -o "Src/LTC6804.o" "../Src/LTC6804.c"
+../Src/LTC6804.c: In function 'LTC6804_init':
+../Src/LTC6804.c:333:2: warning: implicit declaration of function 'UART_print' [-Wimplicit-function-declaration]
+  UART_print("%x", LTC6804_pec_generator(&data, 1, WRITE));
+  ^~~~~~~~~~
+Finished building: ../Src/LTC6804.c
+ 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+../Src/main.c: In function 'main':
+../Src/main.c:208:17: warning: unused variable 'comm_flag' [-Wunused-variable]
+  extern uint8_t comm_flag;
+                 ^~~~~~~~~
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/nextion_functions.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/nextion_functions.d" -MT"Src/nextion_functions.o" -o "Src/nextion_functions.o" "../Src/nextion_functions.c"
+../Src/nextion_functions.c: In function 'uart3MessageReceived':
+../Src/nextion_functions.c:21:7: warning: implicit declaration of function 'NexPageShow' [-Wimplicit-function-declaration]
+       NexPageShow(N_PAGE0);
+       ^~~~~~~~~~~
+../Src/nextion_functions.c: In function 'nextLoop':
+../Src/nextion_functions.c:81:4: warning: implicit declaration of function 'NexTextSetText' [-Wimplicit-function-declaration]
+    NexTextSetText(2, "Low Voltage");
+    ^~~~~~~~~~~~~~
+../Src/nextion_functions.c:96:3: warning: implicit declaration of function 'NexTextGetText' [-Wimplicit-function-declaration]
+   NexTextGetText(2,"");
+   ^~~~~~~~~~~~~~
+../Src/nextion_functions.c:99:2: warning: implicit declaration of function 'NexProgressBarSetValue' [-Wimplicit-function-declaration]
+  NexProgressBarSetValue(0, 0);
+  ^~~~~~~~~~~~~~~~~~~~~~
+../Src/nextion_functions.c:105:11: warning: implicit declaration of function 'NexVariableSetValue' [-Wimplicit-function-declaration]
+           NexVariableSetValue(0, BMS->AIR);
+           ^~~~~~~~~~~~~~~~~~~
+../Src/nextion_functions.c:106:7: warning: implicit declaration of function 'NexNumberSetValue' [-Wimplicit-function-declaration]
+       NexNumberSetValue(0, 0);
+       ^~~~~~~~~~~~~~~~~
+../Src/nextion_functions.c:107:7: warning: implicit declaration of function 'NexXfloatSetValue' [-Wimplicit-function-declaration]
+       NexXfloatSetValue(0, 0);
+       ^~~~~~~~~~~~~~~~~
+../Src/nextion_functions.c:170:5: warning: implicit declaration of function 'NexXfloatSet1Value' [-Wimplicit-function-declaration]
+     NexXfloatSet1Value(15, 0);
+     ^~~~~~~~~~~~~~~~~~
+../Src/nextion_functions.c: In function 'testnexLoop':
+../Src/nextion_functions.c:409:4: warning: this 'else' clause does not guard... [-Wmisleading-indentation]
+    else aux_txt = aux_txt + 1;
+    ^~~~
+../Src/nextion_functions.c:411:2: note: ...this statement, but the latter is misleadingly indented as if it is guarded by the 'else'
+  NexProgressBarSetValue(0,percent);
+  ^~~~~~~~~~~~~~~~~~~~~~
+Finished building: ../Src/nextion_functions.c
+ 
+Building file: ../Src/usart.c
+Invoking: MCU GCC Compiler
+C:\Users\Rodolfo Lessa\Desktop\BMS_rep_of\BMS_teste\Debug
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F103xB -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Device/ST/STM32F1xx/Include" -I"C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/usart.d" -MT"Src/usart.o" -o "Src/usart.o" "../Src/usart.c"
+../Src/usart.c: In function 'sendString':
+../Src/usart.c:249:30: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
+  HAL_UART_Transmit (&huart1, xbeeBuffer, len, 100);
+                              ^~~~~~~~~~
+In file included from C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc/stm32f1xx_hal_conf.h:320:0,
+                 from C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:46,
+                 from C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Inc/usart.h:47,
+                 from ../Src/usart.c:41:
+C:/Users/Rodolfo Lessa/Desktop/BMS_rep_of/BMS_teste/Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h:635:19: note: expected 'uint8_t * {aka unsigned char *}' but argument is of type 'char *'
+ HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+                   ^~~~~~~~~~~~~~~~~
+Finished building: ../Src/usart.c
+ 
+Building target: BMS_teste.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -specs=nosys.specs -specs=nano.specs -T"../STM32F103C8Tx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "BMS_teste.elf" @"objects.list"   -lm
+Finished building target: BMS_teste.elf
+ 
+make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "BMS_teste.elf" "BMS_teste.hex"
+arm-none-eabi-size "BMS_teste.elf"
+   text	   data	    bss	    dec	    hex	filename
+  29020	    152	   3360	  32532	   7f14	BMS_teste.elf
+ 
+
+19:09:44 Build Finished (took 5s.142ms)
+

@@ -13,6 +13,8 @@
 #include "DHAB_s125.h"
 #include "defines.h"
 
+uint8_t NextError[5];
+
 typedef struct BMS_struct {
 
 	//GENERAL

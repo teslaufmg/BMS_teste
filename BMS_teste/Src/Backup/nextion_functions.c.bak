@@ -1,0 +1,214 @@
+
+
+
+#include "BMS.h"
+#include <stdlib.h>
+#include "nextion_functions.h"
+
+void uart3MessageReceived(void)
+{
+  /* If the message is to change the nextion page */
+  if(uart_user_message[0] == 0x71 && uart_user_message[5] == 0xFF && uart_user_message[6] == 0xFF && uart_user_message[7] == 0xFF)
+  {
+    switch(uart_user_message[1])
+    {
+      case 0:
+      actual_page = PAGE0;
+      NexPageShow(PAGE0);
+      break;
+
+      case 1:
+      actual_page = PAGE1;
+      NexPageShow(PAGE1);
+      break;
+
+      case 2:
+      actual_page = PAGE2;
+      NexPageShow(PAGE2);
+      break;
+
+      case 3:
+      actual_page = PAGE3;
+      NexPageShow(PAGE3);
+      break;
+
+      case 4:
+      actual_page = PAGE4;
+      NexPageShow(PAGE4);
+      break;
+
+      case 5:
+      actual_page = PAGE5;
+      NexPageShow(PAGE5);
+      break;
+
+      case 6:
+      actual_page = PAGE6;
+      NexPageShow(PAGE6);
+      break;
+
+    }
+  }
+}
+
+
+//uint8_t nexSetPageError(BMS_struct *BMS) {
+//
+//	uint8_t var01;
+//
+//	if(BMS->lowest_cell < 2800) {
+//		var01 = ;
+//	}
+////	else if(BMS->highest_cell > 3600) {
+////		var01 = nex_id[1];
+////	}
+////	else if(BMS->temperature_max > 600) {
+////		var01 = nex_id[2];
+////	}
+//	else var01 = 0;
+//
+//	return var01;
+//}
+
+void nexLoop(BMS_struct *BMS)
+{
+
+
+	NexProgressBarSetValue(0, 0);
+
+	   switch(actual_page) /*actual_nextion_page is used to not use NexPageShow() many times*/
+		{
+			case PAGE0:
+
+     		   NexVariableSetValue(0, BMS->AIR);
+			   NexNumberSetValue(0, 0);
+			   NexXfloatSetValue(0, 0);
+			   NexXfloatSetValue(1, BMS->lowest_cell);
+			   NexXfloatSetValue(2, BMS->v_bank);
+			   NexXfloatSetValue(3, 0);
+			   break;
+
+			case PAGE1:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE2:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE3:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE4:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE5:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE6:
+
+				NexXfloatSetValue(0, BMS->sensor_v[actual_page - 1]->v_cell[0]);
+				NexXfloatSetValue(1, BMS->sensor_v[actual_page - 1]->v_cell[1]);
+				NexXfloatSetValue(2, BMS->sensor_v[actual_page - 1]->v_cell[2]);
+				NexXfloatSetValue(3, BMS->sensor_v[actual_page - 1]->v_cell[3]);
+				NexXfloatSetValue(4, BMS->sensor_v[actual_page - 1]->v_cell[4]);
+				NexXfloatSetValue(5, BMS->sensor_v[actual_page - 1]->v_cell[5]);
+				NexXfloatSetValue(6, BMS->sensor_v[actual_page - 1]->v_cell[6]);
+				NexXfloatSetValue(7, BMS->sensor_v[actual_page - 1]->v_cell[7]);
+				NexXfloatSetValue(8, BMS->sensor_v[actual_page - 1]->v_cell[8]);
+				NexXfloatSetValue(9, BMS->sensor_v[actual_page - 1]->v_cell[9]);
+				NexXfloatSetValue(10, BMS->sensor_v[actual_page - 1]->v_cell[10]);
+				NexXfloatSetValue(11, BMS->sensor_v[actual_page - 1]->v_cell[11]);
+				NexXfloatSetValue(12, 0);
+				NexXfloatSetValue(13, 0);
+				NexXfloatSetValue(14, 0);
+				NexXfloatSetValue(15, 0);
+				break;
+
+			case PAGE7:
+				break;
+		}
+}

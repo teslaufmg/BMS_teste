@@ -97,17 +97,4 @@ void LED_write(uint8_t state){
 
 	if((state & LED_RED) == LED_RED)
 		HAL_GPIO_WritePin(ERR_LED_RED_GPIO_Port, ERR_LED_RED_Pin, 1);
-	else
-		HAL_GPIO_WritePin(ERR_LED_RED_GPIO_Port, ERR_LED_RED_Pin, 0);
-
-	if((state & LED_GREEN) == LED_GREEN)
-		HAL_GPIO_WritePin(ERR_LED_GREEN_GPIO_Port, ERR_LED_GREEN_Pin, 1);
-	else
-		HAL_GPIO_WritePin(ERR_LED_GREEN_GPIO_Port, ERR_LED_GREEN_Pin, 0);
-
-	if((state & LED_BLUE) == LED_BLUE)
-		HAL_GPIO_WritePin(ERR_LED_BLUE_GPIO_Port, ERR_LED_BLUE_Pin, 1);
-	else
-		HAL_GPIO_WritePin(ERR_LED_BLUE_GPIO_Port, ERR_LED_BLUE_Pin, 0);
-
 }

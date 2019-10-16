@@ -56,10 +56,10 @@
 
 #define UART_RATE			500 //ms
 #define CAN_RATE			3000 //ms
-#define CAN_TEMPERATURE_ID  3
-#define CAN_ERROR_FLAG_ID  	4
-#define CAN_CURRENT_ID		4
-#define CAN_GENERAL_ID		5
+#define CAN_TEMPERATURE_ID  1
+#define CAN_ERROR_FLAG_ID  	2
+#define CAN_CURRENT_ID		3
+#define CAN_GENERAL_ID		4
 
 //ERROR DEFINES:
 #define ERR_NO_ERROR 			0b000000000

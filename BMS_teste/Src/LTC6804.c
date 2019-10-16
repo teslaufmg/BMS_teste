@@ -35,7 +35,7 @@ static const uint16_t GLOBAL_COMMANDS_PEC[8] = {
 		0xc9c0	//COMMAND_ADAX_ALL
 };
 
-static const uint16_t ADDRESSED_COMMANDS_TABLE[6][8] = {{
+static const uint16_t ADDRESSED_COMMANDS_TABLE[N_OF_PACKS][8] = {{
 		0x8004, //READ  S0 V_GROUP A
 		0x8006, //READ  S0 V_GROUP B
 		0x8008, //READ  S0 V_GROUP C
@@ -53,7 +53,8 @@ static const uint16_t ADDRESSED_COMMANDS_TABLE[6][8] = {{
 		0x880E, //READ  S1 T_GROUP B
 		0x8802, //READ  S1 CONFIG
 		0x8801	//WRITE S1 CONFIG
-},{
+}
+,{
 		0x9004, //READ  S2 V_GROUP A
 		0x9006, //READ  S2 V_GROUP B
 		0x9008, //READ  S2 V_GROUP C
@@ -92,7 +93,7 @@ static const uint16_t ADDRESSED_COMMANDS_TABLE[6][8] = {{
 }
 };
 
-static uint16_t ADDRESSED_COMMANDS_PEC[6][8];
+static uint16_t ADDRESSED_COMMANDS_PEC[N_OF_PACKS][8];
 
 static int16_t THERMISTOR_ZEROS[N_OF_PACKS][N_OF_THERMISTORS];
 
@@ -304,7 +305,7 @@ static void LTC6804_send_global_command(uint8_t command){
 	LTC6804_transmit_recieve(GLOBAL_COMMANDS_TABLE[command]);
 	LTC6804_transmit_recieve(GLOBAL_COMMANDS_PEC  [command]);
 	v_cs(1);
-	DWT_Delay_us(5000);
+	DWT_Delay_us(10000);
 }
 
 void LTC6804_set_thermistor_zeros(){
@@ -402,10 +403,20 @@ uint8_t LTC6804_read_registers(uint16_t* data, uint8_t address, uint8_t option){
 			data[(i * 3) + 2] = aux[2];
 
 			//EXCLUIR ISSO O MAIS RAPIDO POSSÌVEL
-			if(address == 1){
+			if(address == 0){
+				data[11] = data[10];
+			}
+			if(address == 3){
+				data[8] = data[2];
+				data[9] = data[2];
+			}
+
+			if(address == 5){
 				data[0] = data[2];
 				data[1] = data[2];
 			}
+
+
 			//CONSERTAR FUSIVEL RAPIDO, TIPO PRA JÀ
 
 		}
@@ -462,9 +473,29 @@ uint8_t LTC6804_get_error(LTC6804* sensor){
 
 
 ////		//EXCLUIR ISSO O MAIS RAPIDO POSSÌVEL
-//		if(sensor->address == 3){
-//			sensor->v_error[i] = 0;
+//		if(sensor->address == 0){
+//			sensor->v_error[1] = 0;
+//			sensor->v_error[2] = 0;
+//			sensor->v_error[3] = 0;
+//			sensor->v_error[4] = 0;
 //		}
+//
+//		if(sensor->address == 1){
+//			sensor->v_error[2] = 0;
+//			sensor->v_error[3] = 0;
+//			sensor->v_error[4] = 0;
+//			sensor->v_error[5] = 0;
+//			sensor->v_error[6] = 0;
+//			sensor->v_error[7] = 0;
+//		}
+//
+//		if(sensor->address == 5){
+//			sensor->v_error[0] = 0;
+//			sensor->v_error[1] = 0;
+//			sensor->v_error[2] = 0;
+//		}
+
+
 ////		//CONSERTAR FUSIVEL RAPIDO, TIPO PRA JÀ
 
 		error_flag |= sensor->v_error[i];
@@ -480,25 +511,25 @@ uint8_t LTC6804_get_error(LTC6804* sensor){
 
 	}
 
-	for(i = 0; i < N_OF_THERMISTORS; i++){
+//	for(i = 0; i < N_OF_THERMISTORS; i++){
+//
+//		sensor->t_mean += sensor->t_cell[i];
+//
+//		if(sensor->t_cell[i] > sensor->t_max)
+//			sensor->t_max = sensor->t_cell[i];
+//
+//		if(sensor->t_cell[i] > MAX_TEMPERATURE)
+//			sensor->t_error[i] = ERR_OVER_TEMPERATURE;
+//		else{
+//			sensor->t_error[i] = ERR_NO_ERROR;
+//		}
+//
+//		error_flag |= sensor->t_error[i];
+//	}
 
-		sensor->t_mean += sensor->t_cell[i];
-
-		if(sensor->t_cell[i] > sensor->t_max)
-			sensor->t_max = sensor->t_cell[i];
-
-		if(sensor->t_cell[i] > MAX_TEMPERATURE)
-			sensor->t_error[i] = ERR_OVER_TEMPERATURE;
-		else{
-			sensor->t_error[i] = ERR_NO_ERROR;
-		}
-
-		error_flag |= sensor->t_error[i];
-	}
 
 
-
-	sensor->t_mean = sensor->t_mean/4;
+//	sensor->t_mean = sensor->t_mean/4;
 
 
 	return error_flag;
