@@ -205,11 +205,11 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		BMS_monitoring(&BMS);
-
-		BMS_error(&BMS);
-
-		BMS_communication(&BMS);
+//		BMS_monitoring(&BMS);
+//
+//		BMS_error(&BMS);
+//
+//		BMS_communication(&BMS);
 
 		/* USER CODE END WHILE */
 

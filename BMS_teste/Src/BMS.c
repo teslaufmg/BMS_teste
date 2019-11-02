@@ -219,54 +219,54 @@ void BMS_error(BMS_struct *BMS){
 	uint16_t flag = 0;
 
 
-	for(int i = 0; i < N_OF_PACKS; i++){
-		if (BMS->sensor_v[i]->status == STAT_OPPERATING) {
-
-			flag |= LTC6804_get_error(BMS->sensor_v[i]) &~ ERR_BALANCE;
-
-
-			//BMS->error_flag &= ~(ERR_UNDER_VOLTAGE | ERR_OVER_VOLTAGE | ERR_OVER_TEMPERATURE);
-
-		}
-	}
-
-
-	if((flag & ERR_UNDER_VOLTAGE) == ERR_UNDER_VOLTAGE)
-		UV_retries++;
-	else
-		UV_retries--;
-	if((flag & ERR_OVER_VOLTAGE) == ERR_OVER_VOLTAGE)
-		OV_retries++;
-	else
-		OV_retries--;
-	if((flag & ERR_OVER_TEMPERATURE) == ERR_OVER_TEMPERATURE)
-		OT_retries++;
-	else
-		OT_retries--;
-
-	if(UV_retries > 5) UV_retries = 5;
-	if(OV_retries > 5) OV_retries = 5;
-	if(OT_retries > 5) OT_retries = 5;
-	if(UV_retries < 0) UV_retries = 0;
-	if(OV_retries < 0) OV_retries = 0;
-	if(OT_retries < 0) OT_retries = 0;
-
-
-	if(UV_retries == 5)
-		BMS->error_flag |= ERR_UNDER_VOLTAGE;
-	else if(UV_retries == 0)
-		BMS->error_flag &= ~ERR_UNDER_VOLTAGE;
-	if(OV_retries == 5)
-		BMS->error_flag |= ERR_OVER_VOLTAGE;
-	else if(OV_retries == 0)
-		BMS->error_flag &= ~ERR_OVER_VOLTAGE;
-	if(OT_retries == 5)
-		BMS->error_flag |= ERR_OVER_TEMPERATURE;
-	else if(OT_retries == 0)
-		BMS->error_flag &= ~ERR_OVER_TEMPERATURE;
-
-	if(BMS->opperating_packs < N_OF_PACKS)
-		BMS->error_flag |= ERR_COMM_ERROR;  //SET FLAG
+//	for(int i = 0; i < N_OF_PACKS; i++){
+//		if (BMS->sensor_v[i]->status == STAT_OPPERATING) {
+//
+//			flag |= LTC6804_get_error(BMS->sensor_v[i]) &~ ERR_BALANCE;
+//
+//
+//			//BMS->error_flag &= ~(ERR_UNDER_VOLTAGE | ERR_OVER_VOLTAGE | ERR_OVER_TEMPERATURE);
+//
+//		}
+//	}
+//
+//
+//	if((flag & ERR_UNDER_VOLTAGE) == ERR_UNDER_VOLTAGE)
+//		UV_retries++;
+//	else
+//		UV_retries--;
+//	if((flag & ERR_OVER_VOLTAGE) == ERR_OVER_VOLTAGE)
+//		OV_retries++;
+//	else
+//		OV_retries--;
+//	if((flag & ERR_OVER_TEMPERATURE) == ERR_OVER_TEMPERATURE)
+//		OT_retries++;
+//	else
+//		OT_retries--;
+//
+//	if(UV_retries > 5) UV_retries = 5;
+//	if(OV_retries > 5) OV_retries = 5;
+//	if(OT_retries > 5) OT_retries = 5;
+//	if(UV_retries < 0) UV_retries = 0;
+//	if(OV_retries < 0) OV_retries = 0;
+//	if(OT_retries < 0) OT_retries = 0;
+//
+//
+//	if(UV_retries == 5)
+//		BMS->error_flag |= ERR_UNDER_VOLTAGE;
+//	else if(UV_retries == 0)
+//		BMS->error_flag &= ~ERR_UNDER_VOLTAGE;
+//	if(OV_retries == 5)
+//		BMS->error_flag |= ERR_OVER_VOLTAGE;
+//	else if(OV_retries == 0)
+//		BMS->error_flag &= ~ERR_OVER_VOLTAGE;
+//	if(OT_retries == 5)
+//		BMS->error_flag |= ERR_OVER_TEMPERATURE;
+//	else if(OT_retries == 0)
+//		BMS->error_flag &= ~ERR_OVER_TEMPERATURE;
+//
+//	if(BMS->opperating_packs < N_OF_PACKS)
+//		BMS->error_flag |= ERR_COMM_ERROR;  //SET FLAG
 //	else
 //	BMS->error_flag &= ~ERR_COMM_ERROR; //RESET FLAG
 
@@ -295,23 +295,23 @@ void BMS_error(BMS_struct *BMS){
 	}
 
 
-	BMS->error_flag &= ~ERR_OPEN_FUSES;
-
-
-	if(BMS->error_flag != ERR_NO_ERROR){
-		if(BMS->opperation_mode == OPP_CHARGING){
-			HAL_GPIO_WritePin(CHARGE_ENABLE_GPIO_Port, CHARGE_ENABLE_Pin, RESET);
-		}
-		else{
-			HAL_GPIO_WritePin(AIR_ENABLE_GPIO_Port, AIR_ENABLE_Pin, RESET);
-			if (BMS_AIR_status(BMS) ==  AIR_CLOSED){
-				BMS->error_flag = ERR_AIR_ERROR;
-			}
-		}
-
-		//Envia por can pro ECU e espera ele desligar os motores;
-		//abre air}
-	}
+//	BMS->error_flag &= ~ERR_OPEN_FUSES;
+//
+//
+//	if(BMS->error_flag != ERR_NO_ERROR){
+//		if(BMS->opperation_mode == OPP_CHARGING){
+//			HAL_GPIO_WritePin(CHARGE_ENABLE_GPIO_Port, CHARGE_ENABLE_Pin, RESET);
+//		}
+//		else{
+//			HAL_GPIO_WritePin(AIR_ENABLE_GPIO_Port, AIR_ENABLE_Pin, RESET);
+//			if (BMS_AIR_status(BMS) ==  AIR_CLOSED){
+//				BMS->error_flag = ERR_AIR_ERROR;
+//			}
+//		}
+//
+//		//Envia por can pro ECU e espera ele desligar os motores;
+//		//abre air}
+//	}
 
 	LED_error(BMS->error_flag);
 	if(BMS->opperation_mode == OPP_DEFAULT){
