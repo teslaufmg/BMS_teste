@@ -31,19 +31,6 @@ uint8_t balance_enable = 1;
 
 
 static const uint16_t CAN_ID_TABLE[8][5] = {
-		{
-				250,		//PACK 0 V_GROUP 0 		(cells 0, 1, 2, 3)
-				251,		//PACK 0 V_GROUP 1		(cells 4, 5, 6, 7)
-				252,		//PACK 0 V_GROUP 2      (cells 8, 9, 10, 11)
-				253,		//PACK 0 T_GROUP        (sensor 0, 1, 2, 3)
-		},
-
-		{
-				255,		//PACK 1 V_GROUP 0 		(cells 0, 1, 2, 3)
-				256,		//PACK 1 V_GROUP 1		(cells 4, 5, 6, 7)
-				257,		//PACK 1 V_GROUP 2      (cells 8, 9, 10, 11)
-				258,		//PACK 1 T_GROUP        (sensor 0, 1, 2, 3)
-		},
 
 		{
 				260,		//PACK 2 V_GROUP 0 		(cells 0, 1, 2, 3)
@@ -68,6 +55,19 @@ static const uint16_t CAN_ID_TABLE[8][5] = {
 				276,		//PACK 5 V_GROUP 1      (cells 4, 5, 6, 7)
 				277,		//PACK 5 V_GROUP 2      (cells 8, 9, 10, 11)
 				278,		//PACK 5 T_GROUP        (sensor 0, 1, 2, 3)
+		},
+		{
+				280,		//PACK 0 V_GROUP 0 		(cells 0, 1, 2, 3)
+				281,		//PACK 0 V_GROUP 1		(cells 4, 5, 6, 7)
+				282,		//PACK 0 V_GROUP 2      (cells 8, 9, 10, 11)
+				283,		//PACK 0 T_GROUP        (sensor 0, 1, 2, 3)
+		},
+
+		{
+				285,		//PACK 1 V_GROUP 0 		(cells 0, 1, 2, 3)
+				286,		//PACK 1 V_GROUP 1		(cells 4, 5, 6, 7)
+				287,		//PACK 1 V_GROUP 2      (cells 8, 9, 10, 11)
+				288,		//PACK 1 T_GROUP        (sensor 0, 1, 2, 3)
 		},
 		{
 				51,		//CHARGING CURRENT (bytes 0, 1, 2, 3) AND DISCHARGING CURRENT(bytes 4, 5, 6, 7)
@@ -136,7 +136,7 @@ void BMS_monitoring(BMS_struct *BMS){
 
 
 			//TEMPERATURES
-//			BMS->error_flag |= LTC6804_read_registers(BMS->sensor_v[i]->t_cell, BMS->sensor_v[i]->address, READ_TEMPERATURES);
+			BMS->error_flag |= LTC6804_read_registers(BMS->sensor_v[i]->t_cell, BMS->sensor_v[i]->address, READ_TEMPERATURES);
 			//FUSES
 
 		}
@@ -207,6 +207,7 @@ int BMS_communication(BMS_struct *BMS){
 	switch(BMS->communication_mode){
 	case COMM_TC_ONLY:
 		BMS_can(BMS);
+
 		break;
 
 	case COMM_FULL:
@@ -401,7 +402,7 @@ void BMS_can(BMS_struct *BMS){
 	v_bank = v_bank/300;
 	BMS->v_bank = v_bank;
 
-//	t_mean = t_mean/4;
+	t_mean = t_mean/4;
 
 	for(i = 0; i < N_OF_PACKS; i++){
 		if (BMS->sensor_v[i]->status == STAT_OPPERATING) {
@@ -581,12 +582,12 @@ void BMS_uart(BMS_struct *BMS){
 
 			UART_print("\n\t");
 
-//			for(int j = 0; j < N_OF_THERMISTORS; j++){
-//				UART_print("TEMP %d: ", j);
-//				UART_print_float((float)BMS->sensor_v[i]->t_cell[j]/1000);
+			for(int j = 0; j < N_OF_THERMISTORS; j++){
+				UART_print("TEMP %d: ", j);
+				UART_print_float((float)BMS->sensor_v[i]->t_cell[j]/1000);
 //				UART_print_error_flag(BMS->sensor_v[i]->t_error[j]);
-//				UART_print("\t");
-//			}
+				UART_print("\t");
+			}
 
 			UART_print("V PACK %d: ", i);
 			UART_print("%d", BMS->sensor_v[i]->v_sum);

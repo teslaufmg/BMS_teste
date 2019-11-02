@@ -220,8 +220,10 @@ int main(void)
 
 		BMS_error(&BMS);
 
-		BMS_communication(&BMS);
+//		UART_print("%d	%d\n", BMS.sensor_v[0]->t_cell[0], BMS.sensor_v[0]->t_cell[2]);
 
+		BMS_communication(&BMS);
+//
 //		nexLoop(&BMS);
 //
 //		testnexLoop(&BMS);

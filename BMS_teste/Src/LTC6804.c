@@ -403,19 +403,6 @@ uint8_t LTC6804_read_registers(uint16_t* data, uint8_t address, uint8_t option){
 			data[(i * 3) + 2] = aux[2];
 
 			//EXCLUIR ISSO O MAIS RAPIDO POSSÌVEL
-			if(address == 0){
-				data[11] = data[10];
-			}
-			if(address == 3){
-				data[8] = data[2];
-				data[9] = data[2];
-			}
-
-			if(address == 5){
-				data[0] = data[2];
-				data[1] = data[2];
-			}
-
 
 			//CONSERTAR FUSIVEL RAPIDO, TIPO PRA JÀ
 
@@ -433,10 +420,10 @@ uint8_t LTC6804_read_registers(uint16_t* data, uint8_t address, uint8_t option){
 		}
 
 		//CONVERT THE TEMPERATURE VALUE< USING data[5] AS REFERENCE
-		data[0] = LTC6804_convert_to_degrees(data[0], data[5], THERMISTOR_ZEROS[address][0]);
-		data[1] = LTC6804_convert_to_degrees(data[1], data[5], THERMISTOR_ZEROS[address][1]);
-		data[2] = LTC6804_convert_to_degrees(data[2], data[5], THERMISTOR_ZEROS[address][2]);
-		data[3] = LTC6804_convert_to_degrees(data[3], data[5], THERMISTOR_ZEROS[address][3]);
+//		data[0] = LTC6804_convert_to_degrees(data[0], data[5], THERMISTOR_ZEROS[address][0]);
+//		data[1] = LTC6804_convert_to_degrees(data[1], data[5], THERMISTOR_ZEROS[address][1]);
+//		data[2] = LTC6804_convert_to_degrees(data[2], data[5], THERMISTOR_ZEROS[address][2]);
+//		data[3] = LTC6804_convert_to_degrees(data[3], data[5], THERMISTOR_ZEROS[address][3]);
 
 		break;
 	}
