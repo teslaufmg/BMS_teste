@@ -84,9 +84,9 @@ extern uint8_t c_zero_flag;
 void BMS_init(BMS_struct *BMS){
 	comm_time = HAL_GetTick();
 
-	CAN_ConfigFilter();
-	CAN_ConfigFrames();
-	CAN_Receive();
+	CAN_Config_Filter();
+	CAN_Config_Frames();
+	CAN_Receive_II();
 
 	BMS->error_flag = ERR_NO_ERROR;
 	BMS->opperating_packs = 0;

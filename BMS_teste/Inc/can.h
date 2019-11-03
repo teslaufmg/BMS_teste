@@ -54,7 +54,7 @@
 extern CAN_HandleTypeDef hcan;
 
 /* USER CODE BEGIN Private defines */
-
+#define __DLC__ 8
 /* USER CODE END Private defines */
 
 extern void _Error_Handler(char *, int);
@@ -62,6 +62,16 @@ extern void _Error_Handler(char *, int);
 void MX_CAN_Init(void);
 
 /* USER CODE BEGIN Prototypes */
+void initRxMes(CanRxMsgTypeDef *RxMessage);
+void HAL_CAN_RxCpltCallback(CAN_HandleTypeDef *CanHandle);
+void HAL_CAN_ErrorCallback (CAN_HandleTypeDef * hcan);
+void HAL_CAN_TxCpltCallback (CAN_HandleTypeDef * hcan);
+void CAN_Config_Filter(void);
+void CAN_Config_Frames(void);
+void CAN_Receive_II(void);
+void CAN_Transmit(uint8_t *vet, uint32_t id);
+void MX_CAN_Init(void);
+
 
 /* USER CODE END Prototypes */
 

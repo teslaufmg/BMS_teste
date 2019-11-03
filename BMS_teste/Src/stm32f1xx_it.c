@@ -219,7 +219,7 @@ void DMA1_Channel3_IRQHandler(void)
   /* USER CODE BEGIN DMA1_Channel3_IRQn 0 */
 
   /* USER CODE END DMA1_Channel3_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_usart3_rx);
+  //HAL_DMA_IRQHandler(&hdma_usart3_rx);
   /* USER CODE BEGIN DMA1_Channel3_IRQn 1 */
 	DMA_IrqHandler(&hdma_usart3_rx, &huart3);
   /* USER CODE END DMA1_Channel3_IRQn 1 */
@@ -249,6 +249,7 @@ void USB_LP_CAN1_RX0_IRQHandler(void)
   /* USER CODE END USB_LP_CAN1_RX0_IRQn 0 */
   HAL_CAN_IRQHandler(&hcan);
   /* USER CODE BEGIN USB_LP_CAN1_RX0_IRQn 1 */
+  CAN_Receive_II();
 
   /* USER CODE END USB_LP_CAN1_RX0_IRQn 1 */
 }
@@ -303,7 +304,7 @@ void USART3_IRQHandler(void)
   /* USER CODE BEGIN USART3_IRQn 0 */
 
   /* USER CODE END USART3_IRQn 0 */
-  HAL_UART_IRQHandler(&huart3);
+  //HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */
 	USART_IrqHandler(&huart3, &hdma_usart3_rx);
   /* USER CODE END USART3_IRQn 1 */

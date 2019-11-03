@@ -142,32 +142,33 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 
 /* USER CODE BEGIN 1 */
 
+/*Configuring the CAN Filter:*/
+void CAN_Config_Filter(void){
 
-/*##-2- Configure the CAN Filter ###########################################*/
-void CAN_ConfigFilter(void){
-	CAN_FilterConfTypeDef  sFilterConfig;
-	sFilterConfig.FilterNumber = 0;
-	sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
-	sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
-	sFilterConfig.FilterIdHigh = 0x0000;
-	sFilterConfig.FilterIdLow = 0x0000;       //FILTRO CONFIGURADO PARA NAO DAR ERRO
-	sFilterConfig.FilterMaskIdHigh = 0x0000;  //MAS N�O ESTA SENDO USADO
-	sFilterConfig.FilterMaskIdLow = 0x0000;
-	sFilterConfig.FilterFIFOAssignment = 0;
-	sFilterConfig.FilterActivation = ENABLE;
-	sFilterConfig.BankNumber = 14;
+	//GUI ADICIONOU PRA RECEBER IDS DA CAN MENORES QUE 16
+	uint32_t filter_id = 0x00000000;
+  uint32_t filter_mask = 0xFFFFFF10;
+	CAN_FilterConfTypeDef filter;
 
-	if (HAL_CAN_ConfigFilter(&hcan, &sFilterConfig) != HAL_OK)  // RETORNA O STATUS DA FUN��O
+    filter.FilterIdHigh = ((filter_id << 5)  | (filter_id >> (32 - 5))) & 0xFFFF; // STID[10:0] & EXTID[17:13]
+    filter.FilterIdLow = (filter_id >> (11 - 3)) & 0xFFF8; // EXID[12:5] & 3 Reserved bits
+    filter.FilterMaskIdHigh = ((filter_mask << 5)  | (filter_mask >> (32 - 5))) & 0xFFFF;
+    filter.FilterMaskIdLow = (filter_mask >> (11 - 3)) & 0xFFF8;
+    filter.FilterFIFOAssignment = 0;
+    filter.FilterNumber = 0;
+    filter.FilterMode = CAN_FILTERMODE_IDMASK;
+    filter.FilterScale = CAN_FILTERSCALE_32BIT;
+    filter.FilterActivation = ENABLE;
+    filter.BankNumber = 14;
+
+	if (HAL_CAN_ConfigFilter(&hcan, &filter) != HAL_OK)  // RETORNA O STATUS DA FUNCAO
 	{
-	  /* Filter configuration Error */
 	  _Error_Handler(__FILE__, __LINE__);
 	}
-
 }
 
-
-void CAN_ConfigFrames(void){
-	static CanTxMsgTypeDef        TxMessage; // Struct de defini��o da estrutura da mensagem CAN Tx
+void CAN_Config_Frames(void){
+	static CanTxMsgTypeDef        TxMessage; // Struct de definicao da estrutura da mensagem CAN Tx
 	static CanRxMsgTypeDef        RxMessage;
 
 	Init_RxMes(&RxMessage);
@@ -175,7 +176,8 @@ void CAN_ConfigFrames(void){
 	hcan.pTxMsg = &TxMessage;
 	hcan.pRxMsg = &RxMessage;
 
-	/*##-3- Configure Transmission process #####################################*/
+	/*Configure Transmission process:*/
+
 	// CONFIGURA A STRUCT TxMessage
 	hcan.pTxMsg->StdId = 0x300; //Specifies the standard identifier
 	hcan.pTxMsg->ExtId = 0x01; //Specifies the extended identifier.
@@ -184,8 +186,8 @@ void CAN_ConfigFrames(void){
 	hcan.pTxMsg->DLC = 8; //Specifies the length of the frame that will be transmitted.
 }
 
-/*##-2- Start the Reception process and enable reception interrupt #########*/
-void CAN_Receive(){
+/*Start the Reception process and enable reception interrupt*/
+void CAN_Receive_II(void){
 	if (HAL_CAN_Receive_IT(&hcan, CAN_FIFO0) != HAL_OK)
 	{
 	  /* Reception Error */
@@ -194,19 +196,17 @@ void CAN_Receive(){
 }
 
 void CAN_Transmit(uint8_t *vet, uint32_t id){
-	/* Set the data to be transmitted, from array *vet */
+
 	hcan.pTxMsg->StdId = id; //Specifies the standard identifier
 	for(uint8_t i=0; i < hcan.pTxMsg->DLC; i++)
 		hcan.pTxMsg->Data[i] = vet[i];
-	/*##-3- Start the Transmission process ###############################*/
+
+	/*Start the Transmission process:*/
 	HAL_StatusTypeDef trans_status = HAL_CAN_Transmit_IT(&hcan);
 
-
-	HAL_Delay(7);
 	//Error handler
 	if (trans_status != HAL_OK)
 	{
-		/* Transmition Error */
 		//Error_Handler();
 	}
 }
@@ -216,6 +216,7 @@ void CAN_Transmit(uint8_t *vet, uint32_t id){
   * @param  CanRxMsgTypeDef *RxMessage
   * @retval None
   */
+
 void Init_RxMes(CanRxMsgTypeDef *RxMessage)
 {
   uint8_t i = 0;
@@ -233,9 +234,21 @@ void Init_RxMes(CanRxMsgTypeDef *RxMessage)
 
 //void HAL_CAN_TxCpltCallback(CAN_HandleTypeDef * hcan){}
 
-void HAL_CAN_ErrorCallback(CAN_HandleTypeDef * hcan) {
-//	Error_Handler();
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef * hcan)
+{
+	/* For CAN Rx frames received in FIFO number 0 */
+  __HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_FOV0);
+  HAL_CAN_Receive_IT(hcan, CAN_FIFO0);
+  __HAL_CAN_FIFO_RELEASE(hcan, CAN_FIFO0);
+
+	/* For CAN Rx frames received in FIFO number 1 */
+  //__HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_FOV1);
+  //__HAL_CAN_Receive_IT(hcan, CAN_FIFO1);
+	__HAL_CAN_RESET_HANDLE_STATE(hcan);
+	__HAL_CAN_ENABLE_IT(hcan, CAN_IT_EWG | CAN_IT_EPV | CAN_IT_BOF | CAN_IT_LEC | CAN_IT_ERR | CAN_IT_FMP0| CAN_IT_FOV0| CAN_IT_FMP1| CAN_IT_FOV1| CAN_IT_TME);
+	__HAL_UNLOCK(hcan);
 }
+
 
 /* USER CODE END 1 */
 
